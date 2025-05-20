@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "../store";
 
 function Meals() {
   const { meals, searchQuery, setMeals, setSearchQuery } = useStore();
+  const [draft,setDraft] = useState('')
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -33,14 +34,22 @@ function Meals() {
       <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">
         🐟 Seafood Recipes
       </h1>
-
+      <div className="flex mb-6 gap-2">
       <input
         type="text"
         placeholder="Search for a meal..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 mb-6"
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        className="flex-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 "
       />
+      <button
+        className="px-4 py-3  bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        onClick={() => setSearchQuery(draft)}
+      >
+        search
+      </button>
+
+      </div>
 
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
         {filteredMeals.length > 0 ? (
